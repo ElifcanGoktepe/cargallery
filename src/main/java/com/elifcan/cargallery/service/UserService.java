@@ -19,7 +19,7 @@ public class UserService {
                         .name(dto.name())
                         .email(dto.email())
                         .password(dto.password())
-                        .rePassword(dto.rePassword())
+
                 .build());
     }
 
