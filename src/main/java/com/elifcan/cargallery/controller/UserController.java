@@ -4,11 +4,7 @@ import com.elifcan.cargallery.dto.request.DoLoginRequestDto;
 import com.elifcan.cargallery.dto.request.DoRegisterRequestDto;
 import com.elifcan.cargallery.dto.response.BaseResponse;
 import com.elifcan.cargallery.entity.User;
-import com.elifcan.cargallery.exception.CarGalleryException;
-import com.elifcan.cargallery.exception.ErrorType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,12 +17,8 @@ import java.util.Optional;
 @SecurityRequirement(name = "bearerAuth")
 public class UserController {
     private final UserService userService;
-
-
-    @PostMapping(DOREGISTER)
+    PostMapping(DOREGISTER)
     public ResponseEntity<BaseResponse<Boolean>> doRegister(@RequestBody DoRegisterRequestDto dto){
-        if(!dto.password().equals(dto.rePassword()));
-            throw new CarGalleryException(ErrorType.PASSWORD_ERROR);
         userService.doRegister(dto);
         return ResponseEntity.ok(BaseResponse.<Boolean>builder()
                 .message("Basariyla kaydedildi")
@@ -39,7 +31,7 @@ public class UserController {
     public ResponseEntity<BaseResponse<String>> doLogin(@RequestBody DoLoginRequestDto dto){
         Optional<User> optionalUser = userService.findByEmailPassword(dto);
         if(optionalUser.isEmpty())
-            throw new CarGalleryException(ErrorType.SIFREHATASI);
+            throw new ETicaretException(ErrorType.SIFREHATASI);
         return ResponseEntity.ok(BaseResponse.<String>builder()
                 .message("Basariyla giris yapildi")
                 .code(200)
