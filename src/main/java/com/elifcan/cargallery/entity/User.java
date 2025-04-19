@@ -11,16 +11,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tblcar")
-public class Car {
+@Table(name = "tbluser")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    @Column(nullable = false, length = 80)
     String name;
-    String brand;
-    String model;
-    String color;
-    String image;
-    String description;
-
+    String address;
+    @Column(nullable = false, length = 20)
+    String phone;
+    @Column(nullable = false, unique = true)
+    String email;
+    @Column(nullable = false, length = 128)
+    String password;
+    String avatar;
 }
