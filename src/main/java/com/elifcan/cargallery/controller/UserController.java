@@ -8,6 +8,7 @@ import com.elifcan.cargallery.dto.response.BaseResponse;
 import com.elifcan.cargallery.entity.User;
 import com.elifcan.cargallery.exception.CarGalleryException;
 import com.elifcan.cargallery.exception.ErrorType;
+import com.elifcan.cargallery.service.UserRoleService;
 import com.elifcan.cargallery.service.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ import static com.elifcan.cargallery.config.RestApi.*;
 public class UserController {
     private final UserService userService;
     private final JwtManager jwtManager;
+    private final UserRoleService userRoleService;
 
     @PostMapping(REGISTER_USER)
     public ResponseEntity<BaseResponse<Boolean>> doRegister(@RequestBody DoRegisterRequestDto dto){
