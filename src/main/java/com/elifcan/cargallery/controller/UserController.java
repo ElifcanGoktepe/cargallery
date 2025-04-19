@@ -1,14 +1,22 @@
 package com.elifcan.cargallery.controller;
 
+import com.elifcan.cargallery.config.JwtManager;
+import com.elifcan.cargallery.dto.request.AddRoleRequestDto;
 import com.elifcan.cargallery.dto.request.DoLoginRequestDto;
 import com.elifcan.cargallery.dto.request.DoRegisterRequestDto;
 import com.elifcan.cargallery.dto.response.BaseResponse;
 import com.elifcan.cargallery.entity.User;
+import com.elifcan.cargallery.exception.CarGalleryException;
+import com.elifcan.cargallery.exception.ErrorType;
+import com.elifcan.cargallery.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+
+import static com.elifcan.cargallery.config.RestApi.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,7 +25,9 @@ import java.util.Optional;
 @SecurityRequirement(name = "bearerAuth")
 public class UserController {
     private final UserService userService;
-    PostMapping(DOREGISTER)
+    private final JwtManager jwtManager;
+
+    @PostMapping(REGISTER_USER)
     public ResponseEntity<BaseResponse<Boolean>> doRegister(@RequestBody DoRegisterRequestDto dto){
         userService.doRegister(dto);
         return ResponseEntity.ok(BaseResponse.<Boolean>builder()
@@ -27,15 +37,15 @@ public class UserController {
                 .build());
 
     }
-    @PostMapping(LOGIN)
+    @PostMapping(LOGIN_USER)
     public ResponseEntity<BaseResponse<String>> doLogin(@RequestBody DoLoginRequestDto dto){
         Optional<User> optionalUser = userService.findByEmailPassword(dto);
         if(optionalUser.isEmpty())
-            throw new ETicaretException(ErrorType.SIFREHATASI);
+            throw new CarGalleryException(ErrorType.EMAIL_PASSWORD_ERROR);
         return ResponseEntity.ok(BaseResponse.<String>builder()
                 .message("Basariyla giris yapildi")
                 .code(200)
-                .data(jwtManager.createToken(optionalKullanici.get().getId()))
+                .data(jwtManager.createToken(optionalUser.get().getId()))
                 .build());
     }
 

@@ -26,4 +26,6 @@ public class RestApi {
     public static final String ADD_CATEGORY =  "/add-category";
     public static final String MAIN_CATEGORY = "/main-category";
     public static final String SUB_CATEGORY =  "/sub-category";
+
+    public static final String ADD_ROLE = "/add-role";
 }
