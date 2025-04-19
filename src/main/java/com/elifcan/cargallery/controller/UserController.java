@@ -4,9 +4,7 @@ import com.elifcan.cargallery.dto.request.DoLoginRequestDto;
 import com.elifcan.cargallery.dto.request.DoRegisterRequestDto;
 import com.elifcan.cargallery.dto.response.BaseResponse;
 import com.elifcan.cargallery.entity.User;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +17,6 @@ import java.util.Optional;
 @SecurityRequirement(name = "bearerAuth")
 public class UserController {
     private final UserService userService;
-
     @PostMapping(DOREGISTER)
     public ResponseEntity<BaseResponse<Boolean>> doRegister(@RequestBody DoRegisterRequestDto dto){
         userService.doRegister(dto);
