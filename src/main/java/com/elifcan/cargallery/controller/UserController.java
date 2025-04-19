@@ -31,6 +31,7 @@ public class UserController {
 
     @PostMapping(REGISTER_USER)
     public ResponseEntity<BaseResponse<Boolean>> doRegister(@RequestBody DoRegisterRequestDto dto){
+        if(!dto.password().equals(dto.rePassword())) throw new CarGalleryException(ErrorType.PASSWORD_ERROR);
         userService.doRegister(dto);
         return ResponseEntity.ok(BaseResponse.<Boolean>builder()
                 .message("Basariyla kaydedildi")

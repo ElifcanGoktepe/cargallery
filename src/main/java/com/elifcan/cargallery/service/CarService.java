@@ -15,7 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CarService {
     private final CarRepository repository;
-    private final Car car;
+
 
     public void addCar(AddCarRequestDto dto){
         Car car= Car.builder()
@@ -45,7 +45,8 @@ public class CarService {
         repository.deleteById(id);
     }
 
-    public void setCar(AddCarRequestDto dto){
+    public void setCar(AddCarRequestDto dto, Long id){
+        Car car = repository.findById(id).get();
         car.setName(dto.name());
         car.setModel(dto.model());
         car.setBrand(dto.brand());

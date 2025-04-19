@@ -44,7 +44,7 @@ public class CarController {
     private ResponseEntity<BaseResponse<Boolean>> updateCar(@RequestBody AddCarRequestDto dto, Long carId){
         Optional<Car> optionalCar = carRepository.findById(carId);
         if(optionalCar.isEmpty()) throw new CarGalleryException(ErrorType.CAR_NOT_FOUN);
-        carService.setCar(dto);
+        carService.setCar(dto, carId);
         return ResponseEntity.ok(BaseResponse.<Boolean>builder()
                 .code(200)
                 .message("Car updated successfully.")
@@ -74,42 +74,21 @@ public class CarController {
                 .build());
     }
 
-    @GetMapping("/{carBrand}")
+    @GetMapping(BRAND + "/{carBrand}")
     public ResponseEntity<BaseResponse<List<Car>>> findCarByBrand(@PathVariable String carBrand) {
-        List<Car> cars = carService.findAllByBrand(carBrand);
-
-        if (cars.isEmpty()) {
-            return ResponseEntity.ok(BaseResponse.<List<Car>>builder()
-                    .code(204)
-                    .message("No cars found for the specified brand.")
-                    .data(cars)
-                    .build());
-        } else {
-            return ResponseEntity.ok(BaseResponse.<List<Car>>builder()
-                    .code(200)
-                    .message("Cars are listed successfully.")
-                    .data(cars)
-                    .build());
-        }
+        return ResponseEntity.ok(BaseResponse.<List<Car>>builder()
+                .code(200)
+                .message("Cars are listed successfully.")
+                .data(carService.findAllByBrand(carBrand))
+                .build());
     }
-    @GetMapping("/{carModel}")
+    @GetMapping(MODEL + "/{carModel}")
     public ResponseEntity<BaseResponse<List<Car>>> findCarByModel(@PathVariable String carModel) {
-        List<Car> cars = carService.findAllByModel(carModel);
-
-        if (cars.isEmpty()) {
-            return ResponseEntity.ok(BaseResponse.<List<Car>>builder()
-                    .code(204)
-                    .message("No cars found for the specified brand.")
-                    .data(cars)
-                    .build());
-        } else {
-            return ResponseEntity.ok(BaseResponse.<List<Car>>builder()
-                    .code(200)
-                    .message("Cars are listed successfully.")
-                    .data(cars)
-                    .build());
-        }
+        return ResponseEntity.ok(BaseResponse.<List<Car>>builder()
+                .code(200)
+                .message("Cars are listed successfully.")
+                .data(carService.findAllByModel(carModel))
+                .build());
     }
-
 
 }
