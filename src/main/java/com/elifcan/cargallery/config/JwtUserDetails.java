@@ -2,6 +2,7 @@ package com.elifcan.cargallery.config;
 
 import com.elifcan.cargallery.entity.User;
 import com.elifcan.cargallery.entity.UserRole;
+import com.elifcan.cargallery.service.UserRoleService;
 import com.elifcan.cargallery.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

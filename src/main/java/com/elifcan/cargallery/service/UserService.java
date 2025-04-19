@@ -27,4 +27,6 @@ public class UserService {
         return userRepository.findOptionalByEmailAndPassword(dto.email(),dto.password());
     }
 
+    public Optional<User> findByUserId(Long userId) {
+    }
 }
