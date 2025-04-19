@@ -17,7 +17,7 @@ import java.util.Optional;
 @SecurityRequirement(name = "bearerAuth")
 public class UserController {
     private final UserService userService;
-    PostMapping(DOREGISTER)
+    @PostMapping(DOREGISTER)
     public ResponseEntity<BaseResponse<Boolean>> doRegister(@RequestBody DoRegisterRequestDto dto){
         userService.doRegister(dto);
         return ResponseEntity.ok(BaseResponse.<Boolean>builder()
