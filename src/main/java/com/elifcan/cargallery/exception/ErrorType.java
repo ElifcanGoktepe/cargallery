@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum ErrorType {
 
+    CAR_NOT_FOUN(4001,"Entered car is not found", HttpStatus.BAD_REQUEST),
     PASSWORD_ERROR(4008, "Entered password is incorrect.", HttpStatus.BAD_REQUEST),
     USER_NOT_EXIST(4006,"User not exist.", HttpStatus.BAD_REQUEST),
     EMAIL_PASSWORD_ERROR(4004, "Username or password is incorrect.",HttpStatus.BAD_REQUEST),

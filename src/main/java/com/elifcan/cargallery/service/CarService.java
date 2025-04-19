@@ -1,6 +1,7 @@
 package com.elifcan.cargallery.service;
 
 
+import com.elifcan.cargallery.dto.request.AddCarRequestDto;
 import com.elifcan.cargallery.repository.CarRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
