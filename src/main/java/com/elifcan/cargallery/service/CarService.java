@@ -1,6 +1,7 @@
 package com.elifcan.cargallery.service;
 
 
+import com.elifcan.cargallery.dto.request.AddCarRequestDto;
 import com.elifcan.cargallery.dto.request.AddRoleRequestDto;
 import com.elifcan.cargallery.entity.Car;
 import com.elifcan.cargallery.repository.CarRepository;
@@ -44,7 +45,7 @@ public class CarService {
         repository.deleteById(id);
     }
 
-    public void setCar(AddCarRequestDto dto, Long id){
+    public void setCar(AddCarRequestDto dto){
         car.setName(dto.name());
         car.setModel(dto.model());
         car.setBrand(dto.brand());

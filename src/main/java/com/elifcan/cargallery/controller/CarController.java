@@ -6,10 +6,10 @@ import com.elifcan.cargallery.dto.response.BaseResponse;
 import com.elifcan.cargallery.entity.Car;
 import com.elifcan.cargallery.exception.CarGalleryException;
 import com.elifcan.cargallery.exception.ErrorType;
+import com.elifcan.cargallery.repository.CarRepository;
 import com.elifcan.cargallery.service.CarService;
-import com.elifcan.cargallery.config.RestApi*;
+
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +28,7 @@ public class CarController {
 
     private final CarService carService;
     private final JwtManager jwtManager;
+    private final CarRepository carRepository;
 
     @PostMapping(ADD_CAR)
     private ResponseEntity<BaseResponse<Boolean>> addCar(@RequestBody AddCarRequestDto dto){
@@ -41,7 +42,7 @@ public class CarController {
 
     @PutMapping(UPDATE_CAR + "/{carId}")
     private ResponseEntity<BaseResponse<Boolean>> updateCar(@RequestBody AddCarRequestDto dto, Long carId){
-        Optional<Car> optionalCar = carService.findAllById(carId);
+        Optional<Car> optionalCar = carRepository.findById(carId);
         if(optionalCar.isEmpty()) throw new CarGalleryException(ErrorType.CAR_NOT_FOUN);
         carService.setCar(dto);
         return ResponseEntity.ok(BaseResponse.<Boolean>builder()
@@ -58,7 +59,7 @@ public class CarController {
         return ResponseEntity.ok(BaseResponse.<List<Car>>builder()
                 .code(200)
                 .message("Cars listed below.")
-                .data(carService.getAllCars())
+                .data(carService.getAll())
                 .build());
 
     }
