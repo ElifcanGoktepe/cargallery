@@ -6,6 +6,7 @@ public record DoRegisterRequestDto(
         String email,
         String phone,
         String password,
+        String rePassword,
         String avatar
 ) {
 }
