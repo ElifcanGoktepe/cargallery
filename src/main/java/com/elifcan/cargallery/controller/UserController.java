@@ -53,7 +53,7 @@ public class UserController {
 
     @PostMapping(ADD_ROLE)
     public ResponseEntity<BaseResponse<Boolean>> addRole(@RequestBody AddRoleRequestDto dto){
-        userRoleService.addRole(dto.roleName(), dto.userId());
+        userRoleService.addRole(dto);
         return ResponseEntity.ok(BaseResponse.<Boolean>builder()
                 .code(200)
                 .message("Ok")
