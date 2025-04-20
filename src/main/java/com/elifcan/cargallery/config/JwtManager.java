@@ -47,7 +47,7 @@ public class JwtManager {
                 .withIssuedAt(issuerAt)
                 .withExpiresAt(expiredAt)
                 .withClaim("userId", userId)
-                .withClaim("ECommerce", "New application")
+                .withClaim("CarGallery", "New application")
                 .withClaim("log","current time : " + (new Date()))
                 .sign(algorithm);
         return token;
@@ -58,7 +58,7 @@ public class JwtManager {
             Algorithm algorithm = Algorithm.HMAC512(secretKey);
             JWTVerifier verifier = JWT.require(algorithm).build();
             DecodedJWT decodedJWT = verifier.verify(token); // checks the expiration and owner of token
-            if(Objects.isNull(decodedJWT)) // if decoded is emty
+            if(Objects.isNull(decodedJWT)) // if decoded is empty
                 return Optional.empty();
             Long userId = decodedJWT.getClaim("userId").asLong(); // claim object is taken in terms of Long
             return Optional.of(userId); // return the value in terms of optional

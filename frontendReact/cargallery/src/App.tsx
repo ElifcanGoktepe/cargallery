@@ -1,35 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+"use client"
 
-function App() {
-  const [count, setCount] = useState(0)
+import { useState } from "react"
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
+import HomePage from "./pages/HomePage"
+import AdminPage from "./pages/AdminPage"
+import LoginPage from "./pages/LoginPage"
+import Navbar from "./components/Navbar"
+import type { Car, User } from "./types"
+import { carsData } from "./data/cars"
+
+export default function App() {
+  const [cars, setCars] = useState<Car[]>(carsData)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [currentUser, setCurrentUser] = useState<User | null>(null)
+
+  const handleLogin = (user: User) => {
+    setIsAuthenticated(true)
+    setCurrentUser(user)
+  }
+
+  const handleLogout = () => {
+    setIsAuthenticated(false)
+    setCurrentUser(null)
+  }
+
+  const addCar = (car: Car) => {
+    setCars([...cars, { ...car, id: Date.now().toString() }])
+  }
+
+  const deleteCar = (id: string) => {
+    setCars(cars.filter((car) => car.id !== id))
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <Router>
+      <div className="min-h-screen bg-gray-50">
+        <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+        <main className="container mx-auto py-6 px-4">
+          <Routes>
+            <Route path="/" element={<HomePage cars={cars} />} />
+            <Route
+              path="/admin"
+              element={
+                isAuthenticated ? (
+                  <AdminPage cars={cars} onAddCar={addCar} onDeleteCar={deleteCar} />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              }
+            />
+            <Route
+              path="/login"
+              element={isAuthenticated ? <Navigate to="/admin" replace /> : <LoginPage onLogin={handleLogin} />}
+            />
+          </Routes>
+        </main>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </Router>
   )
 }
-
-export default App
