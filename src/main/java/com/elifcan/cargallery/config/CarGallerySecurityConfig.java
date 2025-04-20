@@ -33,12 +33,9 @@ public class CarGallerySecurityConfig {
                 req
                         .requestMatchers("/swagger-ui/**",
                                 "v3/api-docs/**", "/dev/v1/user/**",
-                                "/dev/v1/category/main-category",
-                                "/dev/v1/product/get-all-product",
-                                "dev/v1/product/find-by-product-id/**") // belli bir URL adresine erişimi yönet.
+                                "/dev/v1/car/**") // belli bir URL adresine erişimi yönet.
                         .permitAll() // yukarıdaki adres yada adreslere izin ver.
-                        .requestMatchers("/dev/v1/category/**").hasAuthority("CATEGORY-ADMIN")
-                        .requestMatchers("/dev/v1/product/**").hasAuthority("PRODUCT-ADMIN")
+//                        .requestMatchers("/dev/v1/car/**").hasAuthority("CAR-ADMIN")
 
                         // yukarıdaki, oturum açanın yetki kimliği USER, ADMIN, MANAGER .. tipinde ise erişime izin ver.
                         .anyRequest() // yapılan tüm istek türleri (/admin, /user/addUSer, comment/getById ...)

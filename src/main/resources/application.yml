@@ -1,0 +1,23 @@
+# Apache Tomcat server port
+server:
+  port: 9090
+
+# Configs for Hibernate and JDBC links
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/cargallery
+    username: ${POSTGRE_USER_NAME}
+    password: ${POSTGRE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+
+
+my-application:
+  product-title: 'New Java HS2'
+  default-price: 1000
+
+my-jwt:
+  secret-key: ${JWTKEY}
